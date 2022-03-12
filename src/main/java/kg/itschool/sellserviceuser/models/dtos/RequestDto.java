@@ -1,17 +1,17 @@
 package kg.itschool.sellserviceuser.models.dtos;
 
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Data;
 import lombok.experimental.FieldDefaults;
+
 import java.util.Date;
 
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class UserDto {
+public class RequestDto {
 
     Long id;
-    String name;
-    String login;
-    boolean active;
-    String email;
-    Date endOfBlockDate;
+    boolean success;
+    Date add_date;
+    CodeDto code;
 }
