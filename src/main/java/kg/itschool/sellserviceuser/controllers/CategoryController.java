@@ -1,7 +1,6 @@
 package kg.itschool.sellserviceuser.controllers;
 
 import kg.itschool.sellserviceuser.models.dtos.CategoryDto;
-import kg.itschool.sellserviceuser.models.entities.Category;
 import kg.itschool.sellserviceuser.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

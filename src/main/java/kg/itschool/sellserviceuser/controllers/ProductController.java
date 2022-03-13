@@ -23,4 +23,13 @@ public class ProductController {
         return productService.updateProduct(token, productDto);
     }
 
+    @GetMapping("/getByBarcode")
+    public ResponseEntity<?> getProductByBarcode (@RequestHeader String token, @RequestParam String barcode) {
+        return  productService.getProductByBarcode(token, barcode);
+    }
+
+    @GetMapping("/getAllProduct")
+    public ResponseEntity<?> getAllProduct (@RequestHeader String token) {
+        return productService.getAllProduct(token);
+    }
 }

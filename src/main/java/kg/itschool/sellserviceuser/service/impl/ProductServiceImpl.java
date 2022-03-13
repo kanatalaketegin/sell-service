@@ -12,7 +12,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -75,5 +77,64 @@ public class ProductServiceImpl implements ProductService {
                                 .INSTANCE
                                 .mapToProductDto(product)
         );
+    }
+
+    @Override
+    public ResponseEntity<?> getProductByBarcode(String token, String barcode) {
+
+        ResponseEntity<?> responseEntity = userService.verifyLogin(token);
+
+        if (!responseEntity.getStatusCode().equals(HttpStatus.OK)) {
+
+            return  responseEntity;
+        }
+
+        Product product = productRepo.findByBarcode(barcode);
+
+        if (Objects.isNull(product)) {
+
+            return new ResponseEntity<>(
+                    new ResponseException("Товара с таким штрихкодом нет!", null)
+                    ,HttpStatus.NOT_FOUND
+            );
+        }
+
+        return ResponseEntity.ok(
+                ProductMapper
+                    .INSTANCE
+                    .mapToProductDto(product)
+        );
+    }
+
+    @Override
+    public ResponseEntity<?> getAllProduct(String token) {
+
+        ResponseEntity<?> responseEntity = userService.verifyLogin(token);
+
+        if (!responseEntity.getStatusCode().equals(HttpStatus.OK)) {
+
+            return responseEntity;
+        }
+
+        List<Product> productList = productRepo.findAll();
+
+        return ResponseEntity.ok(productList
+                .stream()
+                .map(ProductMapper.INSTANCE::mapToProductDto)
+                .collect(
+                        Collectors.toList()
+                ))       ;
+    }
+
+
+
+    @Override
+    public ProductDto findProductByBarcodeForOperationDetails(String barcode) {
+
+        return ProductMapper
+                .INSTANCE
+                .mapToProductDto(
+                        productRepo
+                                .findByBarcode(barcode));
     }
 }
