@@ -18,4 +18,9 @@ public class ProductController {
         return productService.saveProduct(token, productDto);
     }
 
+    @PutMapping("/update")
+    public ResponseEntity<?> updateProduct(@RequestHeader String token, @RequestBody ProductDto productDto) {
+        return productService.updateProduct(token, productDto);
+    }
+
 }

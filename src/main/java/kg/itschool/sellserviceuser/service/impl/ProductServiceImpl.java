@@ -54,4 +54,26 @@ public class ProductServiceImpl implements ProductService {
                         .INSTANCE
                         .mapToProductDto(product));
     }
+
+    @Override
+    public ResponseEntity<?> updateProduct(String token, ProductDto productDto) {
+
+        ResponseEntity<?> responseEntity = userService.verifyLogin(token);
+
+        if (!responseEntity.getStatusCode().equals(HttpStatus.OK)) {
+
+            return responseEntity;
+        }
+
+        Product product = ProductMapper.INSTANCE.mapToProduct(productDto);
+
+        productRepo.save(product);
+
+        return ResponseEntity.ok(
+                "Товар успешно обновлен!" +
+                        ProductMapper
+                                .INSTANCE
+                                .mapToProductDto(product)
+        );
+    }
 }

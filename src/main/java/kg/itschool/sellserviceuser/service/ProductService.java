@@ -5,4 +5,6 @@ import org.springframework.http.ResponseEntity;
 
 public interface ProductService {
     ResponseEntity<?> saveProduct(String token, ProductDto productDto);
+
+    ResponseEntity<?> updateProduct(String token, ProductDto productDto);
 }
